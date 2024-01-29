@@ -3,7 +3,7 @@
 
 
 
-## Idea : 
+### Idea : 
 It is a user-friendly web app designed for food enthusiasts
  to share and explore the most peculiar and worst food combinations ever experienced. The platform's primary goal is to 
  create a vibrant community where users can bond over their love or disdain for bizarre food pairings.
