@@ -1,0 +1,11 @@
+{
+  "name": "s46_weirdfoodcombos",
+  "version": "1.0.0",
+  "description": "It is a user-friendly web app designed for food enthusiasts  to share and explore the most peculiar and \r worst food combinations ever experienced. The platform's primary goal is to  create a vibrant community \r where users can bond over their love or disdain for bizarre food pairings.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
