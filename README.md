@@ -1,4 +1,4 @@
-# Project Title : *List of Weird and Worst Food Combinations
+# Project Title : List of Weird and Worst Food Combinations
 
 ## Idea : 
 It is a user-friendly web app designed for food enthusiasts  to share and explore the most peculiar and 
