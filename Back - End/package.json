@@ -10,5 +10,10 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.2"
+<<<<<<< HEAD
+=======
+  },
+  "devDependencies": {
+>>>>>>> 6bb4e0f72453aeec65bf099e2aaaadc4acb450f6
   }
 }
