@@ -2,6 +2,7 @@
 const express = require('express')
 const app = express();
 const mongoose = require('mongoose')
+const routes = require('./routes')
 require('dotenv').config();
 
 const mongoURI = process.env.mongoURI
@@ -15,6 +16,10 @@ db.on('error', console.error.bind(console, 'MongoDB connection error'))
 db.once('open', () => {
     console.log("Connected to MongoDB using Mongoose")
 })
+
+app.use(express.json())
+
+app.use('/food', routes)
 
 
 app.get('/', (req,res) => {
