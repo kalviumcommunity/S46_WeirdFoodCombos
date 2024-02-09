@@ -18,3 +18,5 @@ scale or quirky rating icons.
 - ***Community Engagement:*** Creates a sense of community by allowing users to like, comment, and share their favorite (or most despised) food combinations.
 
  ### The Render Deployment Link - https://weirdfoodcombos.onrender.com
+ 
+ ### The Frontend Deployment Link - https://buzz-bites.onrender.com/
