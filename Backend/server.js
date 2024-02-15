@@ -2,6 +2,7 @@
 const express = require('express')
 const app = express();
 const mongoose = require('mongoose')
+const cors = require('cors'); 
 const routes = require('./routes')
 require('dotenv').config();
 
@@ -17,9 +18,9 @@ db.once('open', () => {
     console.log("Connected to MongoDB using Mongoose")
 })
 
-app.use(express.json())
-
-app.use('/food', routes)
+app.use(cors());
+app.use(express.json());
+app.use('/food', routes);
 
 
 app.get('/', (req,res) => {
