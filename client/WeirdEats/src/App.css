@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+input::placeholder {
+    color: #6b7280;
+    opacity: 1;
+    text-align: center;
+  }
