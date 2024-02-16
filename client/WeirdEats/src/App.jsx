@@ -2,7 +2,10 @@
 import './App.css'
 // import bg from './Assets/Bg.png'
 // import Login from './components/Login'
+import CreateDish from './components/CreateDish'
 import MainContent from './components/MainContent'
+import { Routes , Route } from 'react-router-dom'
+import UpdateDish from './components/UpdateDish'
 
 function App() {
 
@@ -12,8 +15,14 @@ function App() {
     {/* <div className="bg-cover bg-center" style={{ backgroundImage: `url(${bg})`, minHeight: '100vh' }}>
       <Login/>
     </div> */}
-    <MainContent/>
+    {/* <MainContent/> */}
+    {/* <CreateDish/> */}
     </div>
+    <Routes>
+      <Route path='/' element={<MainContent/>}/>
+      <Route path='/Create' element={<CreateDish/>}/>
+      <Route path='/Update/:id' element={<UpdateDish/>}/>
+    </Routes>
     </>
   )
 }
