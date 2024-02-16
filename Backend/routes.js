@@ -36,7 +36,6 @@ router.put('/updatefood/:id', (req , res)=>{
     .catch((err)=>res.json(err))
 })
 
-
 router.delete('/deletefood/:id' , (req,res) =>{
     const id = (req.params.id)
     Dish.findByIdAndDelete({_id:id})
