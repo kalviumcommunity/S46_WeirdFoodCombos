@@ -4,21 +4,21 @@ const Joi = require('joi');
 const Dish = require('./Schema');
 
 const CreateDishSchema = Joi.object({
-    Dish: Joi.string().required().pattern(new RegExp('^[A-za-z ]+$')).messages({
-        'string.pattern.base': `"breed" should only contain alphabetic characters`
+    Dish: Joi.string().required().pattern(new RegExp('^[A-za-z ,.!? ]+$')).messages({
+        'string.pattern.base': `"Dish" should only contain alphabetic characters`
       }),
 
-    Ingredients: Joi.string().required().pattern(new RegExp('^[A-za-z ]+$')).messages({
-        'string.pattern.base': `"breed" should only contain alphabetic characters`
+    Ingredients: Joi.string().required().pattern(new RegExp('^[A-Za-z ,.!? ]+$')).messages({
+        'string.pattern.base': `"Ingredients" should only contain alphabetic characters`
       })
 });
 
 const UpdateDishSchema = Joi.object({
-    Dish: Joi.string().required().pattern(new RegExp('^[A-za-z ]+$')).messages({
-        'string.pattern.base': `"breed" should only contain alphabetic characters`
+    Dish: Joi.string().required().pattern(new RegExp('^[A-Za-z ,.!?]+$')).messages({
+        'string.pattern.base': `"Dish" should only contain alphabetic characters`
       }),
-    Ingredients: Joi.string().required().pattern(new RegExp('^[A-za-z ]+$')).messages({
-        'string.pattern.base': `"breed" should only contain alphabetic characters`
+    Ingredients: Joi.string().required().pattern(new RegExp('^[A-Za-z ,.!?]+$')).messages({
+        'string.pattern.base': `"Ingredients" should only contain alphabetic characters`
       })
 });
 
