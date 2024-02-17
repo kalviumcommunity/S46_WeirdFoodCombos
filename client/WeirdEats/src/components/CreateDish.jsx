@@ -25,7 +25,6 @@ function CreateDish() {
         axios
           .post("http://localhost:3000/food/createfood", { Dish, Ingredients })
           .then((res) => console.log(res));
-    
         axios
           .get("http://localhost:3000/food/getfoodsdata")
           .then((res) => setData(res.data))
