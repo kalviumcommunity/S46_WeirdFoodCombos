@@ -1,7 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const Joi = require('joi');
-const Dish = require('./Schema');
+const {Dish , User} = require('./Schema');
+const bcrypt = require('bcrypt')
+
+
 
 const CreateDishSchema = Joi.object({
     Dish: Joi.string().required().pattern(new RegExp('^[A-za-z ,.!? ]+$')).messages({
@@ -13,6 +16,7 @@ const CreateDishSchema = Joi.object({
       })
 });
 
+
 const UpdateDishSchema = Joi.object({
     Dish: Joi.string().required().pattern(new RegExp('^[A-Za-z ,.!?]+$')).messages({
         'string.pattern.base': `"Dish" should only contain alphabetic characters`
@@ -21,6 +25,54 @@ const UpdateDishSchema = Joi.object({
         'string.pattern.base': `"Ingredients" should only contain alphabetic characters`
       })
 });
+
+
+
+router.post("/CreateUser", async (req, res) => {
+    console.log(req.body);
+    try {
+        const {Username , Email , Password} = req.body;
+        const hashedPassword = await bcrypt.hash(Password , 10);
+        const newUser = await User.create({Username , Email , Password : hashedPassword});
+        res.status(201).json(newUser);
+    } catch (err) {
+        console.error("Error creating user:", err);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+
+
+router.post("/login", async (req, res) => {
+    try {
+        const { Email, Password } = req.body;
+
+        const user = await User.findOne({ Email });
+
+        if (!user) {
+            return res.status(400).json({ error: "Incorrect Email or Password" });
+        }
+
+        const passwordMatch = await bcrypt.compare(Password, user.Password);
+        
+        if (passwordMatch) {
+            console.log("SignedIn")
+            return res.json({user: user.Username});
+            return res.status(400).json({message: "Success"});
+        }
+
+        else {
+            return res.status(400).json({ error: "Incorrect Email or Password" });
+        }
+    } 
+
+    catch (err) {
+        console.error("Error Checking User:", err);
+        return res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+
 
 // To get all data
 router.get('/getfoodsdata', async (req, res) => {
