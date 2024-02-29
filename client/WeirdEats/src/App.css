@@ -9,3 +9,11 @@ input::placeholder {
     opacity: 1;
     text-align: center;
   }
+
+form p{
+  color:red;
+}
+
+.blur{
+  filter: blur(2px);
+}

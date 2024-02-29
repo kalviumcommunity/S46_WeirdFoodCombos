@@ -12,25 +12,30 @@ function UpdateDish() {
     const [Ingredients, SetIngredients] = useState("");
     const navigateTo = useNavigate();
 
-    useEffect(() => {
-        axios
-          .get("http://localhost:3000/food/"+id)
-          .then((res) => {setData(res.data)
-            SetDishName(res.data.Dish)
-            SetIngredients(res.data.Ingredients)
-        })
-          .catch((err) => {
-            setError(err);
-            console.error(err);
-          });
-      }, [id]);
 
+
+    useEffect(()=>{
+      axios
+      .get("http://localhost:3000/"+id)
+      .then((res) => {setData(res.data)
+        SetDishName(res.data.Dish)
+        SetIngredients(res.data.Ingredients)
+    })
+      .catch((err) => {
+        setError(err);
+        console.error(err);
+      })
+    },[id]);
+
+    
       const update = (e) =>{
         e.preventDefault();
-        axios.put("http://localhost:3000/food/updatefood/"+id , {Dish ,Ingredients})
-        .then(res => console.log(res.data))
+        axios.put("http://localhost:3000/updatefood/"+id , {Dish ,Ingredients})
+        .then(res =>{ 
+        console.log(res.data);
+        navigateTo('/Main')})
         .catch(err => console.error(err))
-        navigateTo('/')
+       
       }
 
 
