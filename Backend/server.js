@@ -20,7 +20,7 @@ db.once('open', () => {
 
 app.use(cors());
 app.use(express.json());
-app.use('/food', routes);
+app.use('/', routes);
 
 
 app.get('/', (req,res) => {

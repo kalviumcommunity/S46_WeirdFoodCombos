@@ -8,6 +8,9 @@ export default {
     extend: {
         fontFamily: {
           'bayon': ['Bayon', 'sans-serif'],
+          'berkshire' : ['Berkshire Swash', 'serif'],
+          'lobster': ['Lobster', 'cursive'], 
+          'pacifico': ['Pacifico', 'cursive'],
         },
     },
   },

@@ -12,7 +12,7 @@ function CreateDish() {
 
     useEffect(() => {
         axios
-          .get("http://localhost:3000/food/getfoodsdata")
+          .get("http://localhost:3000/getfoodsdata")
           .then((res) => setData(res.data))
           .catch((err) => {
             setError(err);
@@ -23,24 +23,23 @@ function CreateDish() {
       const submit = (e) => {
         e.preventDefault();
         axios
-          .post("http://localhost:3000/food/createfood", { Dish, Ingredients })
+          .post("http://localhost:3000/createfood", { Dish, Ingredients })
           .then((res) => console.log(res));
-    
         axios
-          .get("http://localhost:3000/food/getfoodsdata")
+          .get("http://localhost:3000/getfoodsdata")
           .then((res) => setData(res.data))
           .catch((err) => {
             setError(err);
             console.error(err);
           })
           .catch((err) => console.log(err));
-          navigateTo('/')
+          navigateTo('/Main')
       };
     
 
   return (
     <div className='bg-blue-500 h-screen'>
-        <div className="fixed top-0 left-0 right-0 bottom-0 flex justify-center items-center p-8 h-screen">
+        <div className="flex justify-center items-center p-8 h-screen">
             <div className=" bg-yellow-300 px-8 py-8 w-96 rounded-lg">
               {/* <span className="flex justify-end text-4xl">
                 &times;
