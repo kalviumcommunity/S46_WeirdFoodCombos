@@ -1,7 +1,4 @@
-/* eslint-disable react/no-unescaped-entities */
-/* eslint-disable no-unused-vars */
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../Assets/stir-fry.png";
@@ -9,40 +6,29 @@ import food from "../Assets/food.png";
 import img from '../Assets/bg2.png';
 import cookie from 'js-cookie';
 
-
 function MainContent() {
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
-  const [showUsername  , setShowUsername] = useState("");
+  const [selectedUser, setSelectedUser] = useState("");
   const navigateTo = useNavigate();
 
   useEffect(() => {
-    const usernameFromCookie = cookie.get('Username')
-    setShowUsername(usernameFromCookie);
-
     axios
       .get("http://localhost:3000/getfoodsdata")
-      .then((res) =>
-      {// {console.log(res.data);
+      .then((res) => {
         setData(res.data);
-        
       })
       .catch((err) => {
         setError(err);
         console.error(err);
-        
       });
   }, []);
-
-
 
   const logOut = () => {
     cookie.remove('Username');
     cookie.remove('token');
     navigateTo("/Login");
   };
-
-
 
   return (
     <>
@@ -55,11 +41,31 @@ function MainContent() {
             </div>
           </div>
 
+          <div className="flex items-center justify-between h-auto">
+          <label htmlFor="userDropdown" className="text-lg font-bold">
+            Select User:
+          </label>
+          <select
+            id="userDropdown"
+            value={selectedUser}
+            onChange={(e) => setSelectedUser(e.target.value)}
+            className="ml-2 p-2 rounded-md border border-gray-300"
+          >
+            <option value="">All Users</option>
+            {Array.from(new Set(data.map((item) => item.Username))).map((user) => (
+              <option key={user} value={user}>
+                {user}
+              </option>
+            ))}
+          </select>
+        </div>
+
+
           <div className="flex">
             <div className="flex justify-center items-center">
               <button
                 onClick={logOut}
-                className="hover:text-[#dc881f] text-[#576b29] border-2 border-[#576b29] hover:border-[#dc881f] font-bold rounded-md w-32 h-12 m-2"
+                className="hover:text-[#dc881f] text-[#576b29] border-2 border-[#576b29] hover:border-[#dc881f] font-bold rounded-md w-32 h-12"
               >
                 Log Out
               </button>
@@ -82,61 +88,41 @@ function MainContent() {
               </button>
               </Link>
             </div>
-            </div>
+          </div>
         </header>
 
         <div>
-        <img src={img} alt="img" className="w-full"/>
-       </div>
+          <img src={img} alt="img" className="w-full"/>
+        </div>
 
-
-       <div  className="text-center">
-       <h1 className="text-4xl font-bold">Explore The Weirds</h1>
-       </div>
-
+        <div className="text-center">
+          <h1 className="text-4xl font-bold">Explore The Weirds</h1>
+        </div>
 
         <div className="flex flex-col content-center justify-center flex-wrap">
           {data.map((ele, index) => {
-            return (
-              <div
+            if (!selectedUser || ele.Username === selectedUser) {
+              return (
+                <div
                 key={index}
-                className="text-center mt-10 h-auto w-auto p-6 border-solid border-[#576b29] border-4 rounded-lg flex flex-col justify-center content-center"
+                className="text-center mt-10 p-6 border-solid border-[#576b29] border-4 rounded-lg shadow-md"
               >
-                
-                <h1 className="text-3xl">
-                  <b>Dish:</b> "{ele.Dish}"
+                <h1 className="text-2xl font-bold mb-4">
+                  <span className="text-[#576b29]">Dish :</span> {ele.Dish}
                 </h1>
-                <h2 className="text-3xl">
-                  <b>Ingredients:</b> "{ele.Ingredients}"
+                <h2 className="text-lg">
+                  <span className="text-[#576b29]">Ingredients :</span> {ele.Ingredients}
                 </h2>
-
-                <h6 className="text-xs mt-5">
-                  <b>Posted By:</b> "{ele.Username}"
+                <h6 className="text-xs mt-4">
+                  <span className="text-[#576b29]">Posted By :</span> {ele.Username}
                 </h6>
-
-                {/* <div className="flex flex-row justify-evenly p-4">
-                  <div>
-                    <Link to={`/Update/${ele._id}`}>
-                      <button className="bg-green-500 font-bold text-1xl rounded-md p-2 w-20 text-white">
-                        Update
-                      </button>
-                    </Link>
-                  </div>
-
-                  <div>
-                    <button
-                      onClick={(e) => handleDelete(ele._id)}
-                      className="bg-red-500 font-bold text-1xl rounded-md p-2 w-20 text-white"
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </div> */}
               </div>
-            );
+
+              );
+            }
+            return null;
           })}
         </div>
-
       </div>
     </>
   );
