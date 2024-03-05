@@ -6,44 +6,49 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../Assets/stir-fry.png";
 import food from "../Assets/food.png";
-// import img from '../Assets/Green Modern Health Food Facebook Post  (1) 1.png'
+import img from '../Assets/bg2.png';
+import cookie from 'js-cookie';
+
 
 function MainContent() {
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
+  const [showUsername  , setShowUsername] = useState("");
   const navigateTo = useNavigate();
+
   useEffect(() => {
+    const usernameFromCookie = cookie.get('Username')
+    setShowUsername(usernameFromCookie);
+
     axios
       .get("http://localhost:3000/getfoodsdata")
-      .then((res) => setData(res.data))
+      .then((res) =>
+      {// {console.log(res.data);
+        setData(res.data);
+        
+      })
       .catch((err) => {
         setError(err);
         console.error(err);
+        
       });
   }, []);
 
-  const handleDelete = (id) => {
-    axios
-      .delete("http://localhost:3000/deletefood/" + id)
-      .then((res) => {
-        console.log(res.data);
-        window.location.reload();
-      })
-      .catch((err) => console.error(err));
-  };
+
 
   const logOut = () => {
-    console.log("In");
-    document.cookie =
-      "Username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    cookie.remove('Username');
+    cookie.remove('token');
     navigateTo("/Login");
   };
+
+
 
   return (
     <>
       <div>
-        <header className="p-4  bg-slate-300 flex justify-between">
-          <div className="flex items-center justify-between w-fit">
+        <header className="flex justify-between">
+          <div className="flex items-center justify-between h-auto w-fit">
             <div className="flex items-center p-4">
               <img src={logo} alt="Logo" className="h-14" />
               <h1 className="text-3xl text-black font-bold p-4">Weird Eats</h1>
@@ -71,18 +76,24 @@ function MainContent() {
             </div>
 
             <div className="flex justify-center items-center ml-2">
+              <Link to="/Profile">
               <button className="border-2 border-[#576b29] hover:border-[#dc881f] rounded-full">
                 <img src={food} alt="food" className="h-8 m-1"/>
               </button>
+              </Link>
             </div>
             </div>
         </header>
-        {/* 
-    <div>
-      <div>
-        <img src={img} alt="img" className="h-80 w-full"/>
-      </div>
-    </div> */}
+
+        <div>
+        <img src={img} alt="img" className="w-full"/>
+       </div>
+
+
+       <div  className="text-center">
+       <h1 className="text-4xl font-bold">Explore The Weirds</h1>
+       </div>
+
 
         <div className="flex flex-col content-center justify-center flex-wrap">
           {data.map((ele, index) => {
@@ -91,14 +102,19 @@ function MainContent() {
                 key={index}
                 className="text-center mt-10 h-auto w-auto p-6 border-solid border-[#576b29] border-4 rounded-lg flex flex-col justify-center content-center"
               >
-                <h1>
+                
+                <h1 className="text-3xl">
                   <b>Dish:</b> "{ele.Dish}"
                 </h1>
-                <h2>
+                <h2 className="text-3xl">
                   <b>Ingredients:</b> "{ele.Ingredients}"
                 </h2>
 
-                <div className="flex flex-row justify-evenly p-4">
+                <h6 className="text-xs mt-5">
+                  <b>Posted By:</b> "{ele.Username}"
+                </h6>
+
+                {/* <div className="flex flex-row justify-evenly p-4">
                   <div>
                     <Link to={`/Update/${ele._id}`}>
                       <button className="bg-green-500 font-bold text-1xl rounded-md p-2 w-20 text-white">
@@ -106,6 +122,7 @@ function MainContent() {
                       </button>
                     </Link>
                   </div>
+
                   <div>
                     <button
                       onClick={(e) => handleDelete(ele._id)}
@@ -114,11 +131,12 @@ function MainContent() {
                       Delete
                     </button>
                   </div>
-                </div>
+                </div> */}
               </div>
             );
           })}
         </div>
+
       </div>
     </>
   );

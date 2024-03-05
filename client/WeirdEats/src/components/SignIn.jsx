@@ -10,6 +10,8 @@ import axios from 'axios';
 import bg from '../Assets/Bg.png'
 import Logo from "./Logo";
 import { useNavigate } from 'react-router-dom';
+import cookie from 'js-cookie';
+
 
 
 function SignIn() {
@@ -22,19 +24,13 @@ function SignIn() {
   } = useForm();
 
 
-  const setCookie = (cname, cvalue, exdays) => {
-    const d = new Date();
-    d.setTime(d.getTime() + (exdays*24*60*60*1000));
-    let expires = "expires="+ d.toUTCString();
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-  }
-
   const onSubmit = async (data) => {
     try {
-      const response=  await axios.post('http://localhost:3000/login', data);
+      const response = await axios.post('http://localhost:3000/login', data);
       console.log(response.data);
 
-      setCookie("Username" , response.data.user , 3);
+      cookie.set('Username' , response.data.payload.Username);
+      cookie.set('token' , response.data.token);
         navigateTo('/Main');
         console.log("Hii")
     }
@@ -46,8 +42,6 @@ function SignIn() {
 };   
 
 
-
-
   return (
     <>
       <div className={`bg-cover bg-center`} style={{ backgroundImage: `url(${bg})`, minHeight: '100vh' }}>
@@ -57,9 +51,9 @@ function SignIn() {
             
             <form
               onSubmit={handleSubmit(onSubmit)}
-              className="flex-col justify-center text-center items-center p-8 w-96"
+              className="flex-col justify-center text-center items-center p-8 w-96 font-montserrat "
             >
-              <h1 className="text-3xl font-bayon p-4 m-4">SIGN IN</h1>
+              <h1 className="text-3xl font-montserrat font-bold p-4 m-4">SIGN IN</h1>
 
               {errorMessage && <p className="text-red-500">{errorMessage}</p>}
 
@@ -104,7 +98,7 @@ function SignIn() {
               </div>
 
               <button
-                className="p-2 m-2 mt-4 bg-[#576b29] rounded-lg text-2xl text-white font-bayon "
+                className="p-2 m-2 mt-4 bg-[#576b29] rounded-lg text-xl text-white hover:bg-[#dc881f] font-montserrat"
                 type="submit"
               >
                 Sign In

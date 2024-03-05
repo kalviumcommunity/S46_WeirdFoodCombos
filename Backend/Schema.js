@@ -8,7 +8,16 @@ const DishSchema = new mongoose.Schema({
     Ingredients:{
         type:String,
         required:true
+    },
+    Email:{
+        type:String
+    },
+    Username:{
+        type:String
     }
+    // Review:{
+    //     type:String
+    // }
 });
 
 

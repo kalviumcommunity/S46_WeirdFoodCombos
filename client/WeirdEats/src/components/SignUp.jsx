@@ -38,9 +38,9 @@ const SignUp = () => {
       <div className="bg-slate-200 rounded-lg">
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="flex-col justify-center text-center items-center p-8 w-96 "
+          className="flex-col justify-center text-center items-center p-8 w-96 font-montserrat "
         >
-          <h1 className="text-3xl font-bayon p-4 m-4">SIGN UP</h1>
+          <h1 className="text-3xl font-bold font-montserrat p-4 m-4">SIGN UP</h1>
 
           <div className="flex-col mt-4">
             <label>USERNAME</label>
@@ -103,14 +103,14 @@ const SignUp = () => {
           </div>
           {/* <Link to='/SignIn'> */}
           <button
-            className="p-2 m-2 bg-[#576b29] rounded-lg text-2xl mt-4 text-white font-bayon"
+            className="p-2 m-2 bg-[#576b29] rounded-lg text-xl mt-4 text-white font-montserrat hover:bg-[#dc881f]"
             type="submit"
           >
             Sign Up
           </button>
           {/* </Link> */}
           <p className="text-center mt-2 text-black" >
-              Already Have an Account? <Link to="/SignIn" className="text-[#576b29]">Sign In</Link>
+              Already Have an Account? <Link to="/SignIn" className="text-[#576b29] ">Sign In</Link>
             </p>
         </form>
       </div>

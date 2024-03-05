@@ -3,18 +3,24 @@ const router = express.Router();
 const Joi = require('joi');
 const {Dish , User} = require('./Schema');
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
+const crypto = require('crypto')
+require('dotenv').config();
+
+const secretKey = process.env.SECRETKEY;
 
 
 
-const CreateDishSchema = Joi.object({
-    Dish: Joi.string().required().pattern(new RegExp('^[A-za-z ,.!? ]+$')).messages({
-        'string.pattern.base': `"Dish" should only contain alphabetic characters`
-      }),
+// const CreateDishSchema = Joi.object({
+//     Dish: Joi.string().required().pattern(new RegExp('^[A-za-z ,.!? ]+$')).messages({
+//         'string.pattern.base': `"Dish" should only contain alphabetic characters`
+//       }),
 
-    Ingredients: Joi.string().required().pattern(new RegExp('^[A-Za-z ,.!? ]+$')).messages({
-        'string.pattern.base': `"Ingredients" should only contain alphabetic characters`
-      })
-});
+//     Ingredients: Joi.string().required().pattern(new RegExp('^[A-Za-z ,.!? ]+$')).messages({
+//         'string.pattern.base': `"Ingredients" should only contain alphabetic characters`
+//       })
+// });
+
 
 
 const UpdateDishSchema = Joi.object({
@@ -44,6 +50,7 @@ router.post("/CreateUser", async (req, res) => {
 
 
 router.post("/login", async (req, res) => {
+
     try {
         const { Email, Password } = req.body;
 
@@ -54,17 +61,21 @@ router.post("/login", async (req, res) => {
         }
 
         const passwordMatch = await bcrypt.compare(Password, user.Password);
-        
+        const payload = {Username:user.Username , Email:user.Email};
+
         if (passwordMatch) {
+            const token = jwt.sign(payload, secretKey, {expiresIn: 3600});
+            // res.cookie("token" , token, {maxAge:360000, httpOnly:true});
+
+            
             console.log("SignedIn")
-            return res.json({user: user.Username});
-            return res.status(400).json({message: "Success"});
+            return res.json({token , payload});
         }
 
         else {
             return res.status(400).json({ error: "Incorrect Email or Password" });
         }
-    } 
+    }
 
     catch (err) {
         console.error("Error Checking User:", err);
@@ -78,17 +89,22 @@ router.post("/login", async (req, res) => {
 router.get('/getfoodsdata', async (req, res) => {
     try {
         const data = await Dish.find();
+        // const user = await User.findOne({ Email });
         res.json(data);
+        // res.json(user);
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
 });
+
+
 
 // To Get data by ID
 router.get('/:id', async (req, res) => {
     try {
         const id = req.params.id;
         const data = await Dish.findById(id);
+
         if (!data) {
             return res.status(404).json({ message: 'Data not found' });
         }
@@ -98,19 +114,52 @@ router.get('/:id', async (req, res) => {
     }
 });
 
+
+// To get the particular user 
+router.post('/getsingleUser', async (req, res) => {
+    try {
+      const { token } = req.body;
+      console.log(token);
+      
+      if (!token) {
+        return res.status(400).json({ error: 'Token is required' });
+      }
+      
+      jwt.verify(token, secretKey, async (error, data) => {
+        if (error) {
+          return res.status(401).json({ error: 'Invalid token' });
+        }
+        
+        const { Email } = data;
+        const userData = await User.findOne({ Email });
+        
+        if (!userData) {
+          return res.status(404).json({ error: 'User not found' });
+        }
+        
+        return res.status(200).json(userData);
+      });
+    } catch (error) {
+      console.error('Error:', error);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+  });
+  
+
 // To add data
 router.post('/createfood', async (req, res) => {
     try {
-        const { error } = CreateDishSchema.validate(req.body);
-        if (error) {
-            return res.status(400).json({ error: error.details[0].message });
-        }
+        // const { error } = CreateDishSchema.validate(req.body);
+        // if (error) {
+        //     return res.status(400).json({ error: error.details[0].message });
+        // }
         const newData = await Dish.create(req.body);
         res.json(newData);
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
 });
+
 
 // To Update data at ID
 router.put('/updatefood/:id', async (req, res) => {
