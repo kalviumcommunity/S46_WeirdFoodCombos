@@ -63,16 +63,19 @@ function Profile() {
           data.map((ele, index) => {
             if (Username === ele.Username) {
               return (
-                <div key={index} className="text-center mt-10 h-auto w-auto p-6 border-solid border-[#576b29] border-4 rounded-lg flex flex-col justify-center content-center">
-                  <h1 className="text-3xl">
-                    <b>Dish:</b> "{ele.Dish}"
-                  </h1>
-                  <h2 className="text-3xl">
-                    <b>Ingredients:</b> "{ele.Ingredients}"
-                  </h2>
-                  <h2 className="text-xs mt-5">
-                    <b>PostedBy:</b> You
-                  </h2>
+                <div
+                key={index}
+                className="text-center mt-10 p-6 border-solid border-[#576b29] border-4 rounded-lg shadow-md"
+              >
+                <h1 className="text-2xl font-bold mb-4">
+                  <span className="text-[#576b29]">Dish :</span> {ele.Dish}
+                </h1>
+                <h2 className="text-lg">
+                  <span className="text-[#576b29]">Ingredients :</span> {ele.Ingredients}
+                </h2>
+                <h6 className="text-xs mt-4">
+                  <span className="text-[#576b29]">Posted By :</span> {ele.Username}
+                </h6>
                   <div className="flex flex-row justify-evenly p-4">
                     <div>
                       <Link to={`/Update/${ele._id}`}>
