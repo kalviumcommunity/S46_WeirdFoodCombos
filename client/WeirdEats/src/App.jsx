@@ -46,7 +46,7 @@ function App() {
       <Route path='/Create' element={<CreateDish/>}/>
       <Route path='/Update/:id' element={<UpdateDish/>}/>
       <Route path='/SignIn' element={<SignIn />}/>
-      <Route path='SignUp' element={<SignUp/>}/>
+      <Route path='/SignUp' element={<SignUp/>}/>
       <Route path='/Login' element={<Login/>}/>
       <Route path='/Profile' element={<Profile/>}/>
     </Routes>
