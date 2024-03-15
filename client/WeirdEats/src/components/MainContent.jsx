@@ -14,7 +14,7 @@ function MainContent() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/getfoodsdata")
+      .get("https://weirdfoodcombos.onrender.com/getfoodsdata")
       .then((res) => {
         setData(res.data);
       })

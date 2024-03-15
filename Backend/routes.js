@@ -47,6 +47,9 @@ router.post("/CreateUser", async (req, res) => {
     }
 });
 
+router.get("/test", (req, res) => {
+    res.json({message:"JSON OBJECT"})
+})
 
 
 router.post("/login", async (req, res) => {

@@ -17,7 +17,7 @@ function Profile() {
     setShowUsername(usernameFromCookie);
 
     axios
-      .get("http://localhost:3000/getfoodsdata")
+      .get("https://weirdfoodcombos.onrender.com/getfoodsdata")
       .then((res) => {
         setData(res.data);
       })
@@ -29,7 +29,7 @@ function Profile() {
 
   const handleDelete = (id) => {
     axios
-      .delete(`http://localhost:3000/deletefood/${id}`)
+      .delete(`https://weirdfoodcombos.onrender.com/deletefood/${id}`)
       .then((res) => {
         window.location.reload();
       })

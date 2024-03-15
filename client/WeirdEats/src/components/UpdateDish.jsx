@@ -17,7 +17,7 @@ function UpdateDish() {
 
     useEffect(()=>{
       axios
-      .get("http://localhost:3000/"+id)
+      .get("https://weirdfoodcombos.onrender.com/"+id)
       .then((res) => {setData(res.data)
         SetDishName(res.data.Dish)
         SetIngredients(res.data.Ingredients)
@@ -32,7 +32,7 @@ function UpdateDish() {
     
       const update = (e) =>{
         e.preventDefault();
-        axios.put("http://localhost:3000/updatefood/"+id , {Dish ,Ingredients})
+        axios.put("https://weirdfoodcombos.onrender.com/updatefood/"+id , {Dish ,Ingredients})
         .then(res =>{ 
         console.log(res.data);
         navigateTo('/Profile')})

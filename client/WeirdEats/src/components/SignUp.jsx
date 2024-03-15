@@ -22,7 +22,7 @@ const SignUp = () => {
   const onSubmit = (data) => {
     console.log(data);
     axios
-      .post("http://localhost:3000/CreateUser", data)
+      .post("https://weirdfoodcombos.onrender.com/CreateUser", data)
       .then((data) => {
         console.log(data);
         navigateTo('/SignIn')
