@@ -21,11 +21,11 @@ function CreateDish() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.post('http://localhost:3000/getsingleUser', {
+        const response = await axios.post('https://weirdfoodcombos.onrender.com/getsingleUser', {
           token: Cookies.get('token')
         });
         console.log(response.data);
-        setUserData(response.data)
+        setUserData(response.data) 
       } catch (error) {
         console.error("Request not found:", error);
       }
@@ -44,7 +44,7 @@ function CreateDish() {
     console.log(Email,Username)
 
     axios
-      .get('http://localhost:3000/getfoodsdata')
+      .get('https://weirdfoodcombos.onrender.com/getfoodsdata')
       .then((res) => setData(res.data))
       .catch((err) => {
         setError(err);
@@ -55,7 +55,7 @@ function CreateDish() {
   const submit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:3000/createfood', {
+      await axios.post('https://weirdfoodcombos.onrender.com/createfood', {
         Dish: Dish,
         Ingredients: Ingredients,
         Email: Email,

@@ -19,6 +19,7 @@ db.once('open', () => {
     console.log("Connected to MongoDB using Mongoose")
 })
 
+
 app.use(cors());
 app.use(express.json());
 app.use('/', routes);
